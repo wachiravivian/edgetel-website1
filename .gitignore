@@ -1,7 +1,12 @@
-node_modules
-.next
+node_modules/
+**/node_modules/
+
+.next/
+**/.next/
+
 .env
 .env.local
-dist
-build
-out
+
+dist/
+build/
+out/
