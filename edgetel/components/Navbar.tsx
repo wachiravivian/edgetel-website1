@@ -1,15 +1,16 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import Logo from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Packages", href: "/#packages" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Packages", href: "/#packages" },
+  { label: "Coverage", href: "/#coverage" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -24,77 +25,62 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${
-        scrolled
-          ? "bg-white/95 border-b border-slate-200 shadow-sm py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between text-slate-900">
-        
-        {/* Logo */}
-        <Link href="/">
-  <Logo />
-</Link>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? "bg-white/95 backdrop-blur-md shadow-md border-b border-slate-100" : "bg-white"
+    }`}>
+      {/* h-16 = 64px — logo must fit inside this */}
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-2">
+        <Link href="/" className="flex items-center shrink-0">
+          {/* size="sm" keeps logo at 80×40 — fits comfortably in 64px navbar */}
+          <Logo size="sm" />
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-sm text-slate-900 hover:text-blue-600 transition"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/10 transition hover:bg-blue-500"
+        <div className="hidden md:block shrink-0">
+          <a
+            href="tel:+254709665855"
+            className="flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-white font-semibold hover:bg-blue-700 transition text-sm shadow-md"
           >
-            Talk to Sales
-          </Link>
+            <Phone size={14} />
+            0709 665 855
+          </a>
         </div>
 
-        {/* Mobile Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-slate-900"
-        >
+        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2" aria-label="Toggle menu">
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200 px-4 py-4 text-slate-900">
-          <nav className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="px-4 py-3 rounded-lg hover:bg-slate-100"
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            <div className="mt-3 pt-3 border-t border-slate-200 flex flex-col gap-2">
-              <Link
-                href="/contact"
-                className="px-4 py-3 text-center rounded-full bg-blue-600 text-white font-semibold transition hover:bg-blue-500"
-                onClick={() => setMenuOpen(false)}
-              >
-                Talk to Sales
-              </Link>
-            </div>
-          </nav>
+        <div className="md:hidden bg-white border-t border-slate-100 shadow-lg">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="block px-6 py-3.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="px-6 py-4">
+            <a href="tel:+254709665855" className="flex items-center justify-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-white font-semibold text-sm">
+              <Phone size={14} />
+              0709 665 855
+            </a>
+          </div>
         </div>
       )}
     </header>

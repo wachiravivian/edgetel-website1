@@ -1,105 +1,144 @@
 import Link from "next/link";
-import { Home, Building2, Wifi, Shield, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  Home,
+  Wifi,
+  Shield,
+  Camera,
+  ArrowRight,
+} from "lucide-react";
 
 const services = [
   {
+    title: "Wide Area Networks",
+    description:
+      "Reliable WAN solutions connecting offices, campuses and branches.",
     icon: Building2,
-    title: "Wide area networks",
-    description: "Design and manage WAN solutions that connect multiple sites, offices, and campuses with resilient, high-performance links.",
-    cta: "Request a WAN quote",
-    href: "/contact",
-    tag: "Enterprise",
+    color: "from-blue-500 to-cyan-500",
   },
   {
+    title: "Wireless Internet Connection",
+    description:
+      "Wireless coverage – Murera, 1four, Kenyatta rd, Membley, Kamiti Corner, Ruai, Kamulu..",
     icon: Home,
-    title: "PAB-X & IP Intercom",
-    description: "Install PABX and IP intercom systems for secure voice communications, visitor access, and facility paging.",
-    cta: "Discuss your setup",
-    href: "/contact",
-    tag: null,
+    color: "from-violet-500 to-purple-500",
   },
   {
-    icon: Wifi,
     title: "Networking",
-    description: "Build and support wired and wireless LANs with modern routing, switching, and secure network design.",
-    cta: "Plan your network",
-    href: "/contact",
-    tag: null,
-  },
-  {
-    icon: Shield,
-    title: "Structured cabling",
-    description: "Deliver professional copper and fiber cabling installations with labeling, testing, and documentation for reliable infrastructure.",
-    cta: "Schedule an audit",
-    href: "/contact",
-    tag: null,
-  },
-  {
+    description:
+      "Professional wired network installation and support.",
     icon: Wifi,
+    color: "from-sky-500 to-blue-600",
+  },
+  {
+    title: "Structured Cabling",
+    description:
+      "Copper and fibre cabling with proper testing and documentation.",
+    icon: Shield,
+    color: "from-emerald-500 to-green-500",
+  },
+  {
     title: "CCTV Installation",
-    description: "Install CCTV camera systems with recording, remote monitoring, and support to keep your premises safe.",
-    cta: "Book CCTV setup",
-    href: "/contact",
-    tag: null,
+    description:
+      "Smart surveillance with remote viewing and reliable recording.",
+    icon: Camera,
+    color: "from-orange-500 to-red-500",
   },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p className="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-3"
-            style={{ fontFamily: "var(--font-space)" }}>
-            What We Offer
-          </p>
-          <h1 className="text-5xl sm:text-6xl font-extrabold text-slate-900 leading-tight mb-4"
-            style={{ fontFamily: "var(--font-space)" }}>
-            Our Services
-          </h1>
-          <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-            From home broadband to enterprise managed networks — we have a solution that fits.
-          </p>
-        </div>
+    <main className="pt-28 pb-20 bg-slate-50 min-h-screen">
 
-        {/* Service cards */}
-        <div className="grid sm:grid-cols-2 gap-6">
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
+      {/* Hero */}
+      <section className="text-center max-w-3xl mx-auto px-4 mb-16">
+        <span className="inline-block px-4 py-2 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+          WHAT WE DO
+        </span>
+
+        <h1 className="mt-6 text-5xl font-extrabold text-slate-900">
+          Our Services
+        </h1>
+
+        <p className="mt-5 text-lg text-slate-600">
+          From fibre internet to enterprise networking solutions,
+          we build reliable technology that keeps your home and
+          business connected.
+        </p>
+      </section>
+
+      {/* Cards */}
+      <section className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {services.map((service) => {
+          const Icon = service.icon;
+
+          return (
+            <div
+              key={service.title}
+              className="group relative overflow-hidden rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+            >
+              {/* Top gradient */}
               <div
-                    key={service.title}
-                    className="p-10 rounded-3xl border border-white/5 bg-white/[0.02] hover:border-blue-200 hover:bg-white/[0.04] transition-all duration-300 flex flex-col hover:shadow-lg"
-                  >
-                {service.tag && (
-                  <span className="self-start text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-200 mb-4"
-                    style={{ fontFamily: "var(--font-space)" }}>
-                    {service.tag}
-                  </span>
-                )}
-                <div className="w-16 h-16 rounded-3xl bg-blue-50 border border-blue-200 flex items-center justify-center mb-6">
-                  <Icon size={26} className="text-blue-600" />
+                className={`h-2 bg-gradient-to-r ${service.color}`}
+              />
+
+              <div className="p-8">
+
+                <div
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition`}
+                >
+                  <Icon size={28} />
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-relaxed mb-3" style={{ fontFamily: "var(--font-space)" }}>
+
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">
                   {service.title}
                 </h2>
-                <p className="text-gray-600 text-base leading-relaxed mb-6 flex-1">
+
+                <p className="text-slate-600 leading-7 mb-8">
                   {service.description}
                 </p>
+
                 <Link
-                  href={service.href}
-                  className="inline-flex items-center gap-2 text-blue-600 text-base font-semibold hover:text-blue-500 transition-colors group mt-2"
-                  style={{ fontFamily: "var(--font-space)" }}
+                  href="/contact"
+                  className="inline-flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all"
                 >
-                  {service.cta}
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  Get Started
+                  <ArrowRight size={18} />
                 </Link>
+
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
+
+      </section>
+
+      {/* CTA */}
+      <section className="mt-24 px-4">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-center p-12">
+
+          <h2 className="text-4xl font-bold mb-4">
+            Ready to Upgrade Your Network?
+          </h2>
+
+          <p className="text-blue-100 max-w-2xl mx-auto mb-8">
+            Whether you need fibre internet, networking, CCTV,
+            structured cabling or enterprise solutions,
+            our team is ready to help.
+          </p>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-white text-blue-600 font-bold px-8 py-4 rounded-full hover:scale-105 transition"
+          >
+            Contact Us
+            <ArrowRight size={18} />
+          </Link>
+
         </div>
-      </div>
-    </div>
+      </section>
+
+    </main>
   );
 }

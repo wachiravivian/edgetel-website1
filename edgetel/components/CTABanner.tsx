@@ -1,44 +1,33 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { HeadphonesIcon, ArrowRight } from "lucide-react";
 
 export default function CTABanner() {
   return (
-    <section className="py-12 px-4">
-      <div className="max-w-4xl mx-auto rounded-3xl bg-white shadow-lg border border-slate-200 p-12 sm:p-16 text-center relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10">
-          <h2
-            className="text-3xl sm:text-5xl font-bold text-slate-900 leading-relaxed mb-4 leading-tight"
-            style={{ fontFamily: "var(--font-space)" }}
-          >
-            Ready to Get Connected?
-          </h2>
-          <p className="text-slate-600 leading-relaxed text-lg mb-10 max-w-xl mx-auto">
-            Join thousands of Kenyan homes and businesses on Edgetel. Installation in as fast as 24 hours.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/#packages"
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-base bg-blue-600 hover:bg-blue-500 transition-all hover:scale-105 active:scale-95"
-              style={{ fontFamily: "var(--font-space)", color: "#FFFFFF" }}
-            >
-              View Packages
-              <ArrowRight size={18} />
-            </Link>
-            <a
-              href="tel:+254700000000"
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-base border border-slate-200 text-slate-900 leading-relaxed hover:text-white hover:bg-blue-500 transition-all bg-white"
-              style={{ fontFamily: "var(--font-space)" }}
-            >
-              <Phone size={16} />
-              Call Us Now
-            </a>
+    <section className="bg-blue-600 py-10">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-5">
+          <div className="w-14 h-14 rounded-full bg-blue-500/60 flex items-center justify-center shrink-0">
+            <HeadphonesIcon size={26} className="text-white" />
+          </div>
+          <div>
+            <h3 className="text-white font-bold text-xl">
+              Need help choosing the right package?
+            </h3>
+            <p className="text-blue-200 text-sm mt-0.5">
+              Our team is ready to help you get connected.
+            </p>
           </div>
         </div>
+
+        <Link
+          href="/contact"
+          className="flex items-center gap-2 bg-white text-blue-700 font-bold px-7 py-3.5 rounded-full hover:bg-blue-50 transition shadow-md shrink-0"
+        >
+          Talk to Us
+          <ArrowRight size={18} />
+        </Link>
       </div>
     </section>
   );

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingChat from "@/components/FloatingChat";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import FloatingChat from "../components/FloatingChat";
+import AnnouncementBar from "../components/AnnouncementBar";
 
 export const metadata: Metadata = {
   title: "Edgetel | Blazing Fast Internet in Kenya",
@@ -27,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <FloatingChat />
-      </body>
+  <Navbar />
+  <main>{children}</main>
+  <Footer />
+  <FloatingChat />
+</body>
     </html>
   );
 }

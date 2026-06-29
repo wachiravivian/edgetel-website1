@@ -1,118 +1,124 @@
 "use client";
+
 import { useState } from "react";
-import { Check } from "lucide-react";
+import Link from "next/link";
+import { Check, Zap, Building2 } from "lucide-react";
 
-const homePackages = [
-  { speed: 20, price: 2000, popular: false },
-  { speed: 30, price: 2500, popular: false },
-  { speed: 40, price: 3000, popular: false },
-  { speed: 45, price: 3500, popular: false },
-  { speed: 50, price: 4000, popular: false },
-  { speed: 60, price: 4500, popular: true },
+type Package = {
+  speed: number;
+  price: number;
+  devices: string;
+  extra: string;
+  popular?: boolean;
+};
+
+const homePackages: Package[] = [
+  { speed: 20, price: 2000, devices: "Perfect for 3-5 devices", extra: "HD streaming & browsing" },
+  { speed: 30, price: 2500, devices: "Ideal for 5-8 devices", extra: "Streaming & remote work" },
+  { speed: 40, price: 3000, devices: "Ideal for 8-12 devices", extra: "Gaming & video calls" },
+  { speed: 45, price: 3500, devices: "Ideal for 8-12 devices", extra: "Gaming & video calls" },
+  { speed: 50, price: 4000, devices: "Great for 8-12 devices", extra: "Multiple 4K streaming" },
+  { speed: 60, price: 4500, devices: "Excellent for smart homes", extra: "Gaming, streaming & work" },
 ];
 
-const businessPackages = [
-  { speed: 20, price: 4500, popular: false },
-  { speed: 50, price: 8000, popular: true },
-  { speed: 100, price: 15000, popular: false },
+const businessPackages: Package[] = [
+  { speed: 20, price: 4500, devices: "Small office", extra: "Up to 10 users" },
+  { speed: 50, price: 8000, devices: "Medium business", extra: "20+ users", popular: true },
+  { speed: 100, price: 15000, devices: "Large offices", extra: "Heavy cloud applications" },
 ];
-
-type Tab = "home" | "business";
 
 export default function Packages() {
-  const [tab, setTab] = useState<Tab>("home");
+  const [tab, setTab] = useState<"home" | "business">("home");
   const packages = tab === "home" ? homePackages : businessPackages;
 
   return (
-    <section id="packages" className="py-20">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="packages" className="py-14 bg-gray-50">
+      <div className="max-w-[1400px] mx-auto px-4">
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-5xl sm:text-6xl font-extrabold text-slate-900 mb-3 tracking-tight">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-            Choose a plan that fits your needs — clear pricing, no surprises.
+        <div className="text-center mb-8">
+          <p className="uppercase tracking-[0.3em] text-blue-600 font-semibold text-xs mb-2">Affordable Internet</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Choose Your Package</h2>
+          <p className="text-slate-500 mt-2 max-w-xl mx-auto text-sm">
+            Reliable fibre internet for homes and businesses with free installation and unlimited browsing.
           </p>
         </div>
 
-        {/* Tabs */}
         <div className="flex justify-center mb-8">
-          <div className="flex bg-white shadow-sm rounded-full p-1">
-            {(["home", "business"] as Tab[]).map((t) => (
+          <div className="rounded-full border border-blue-600 p-0.5 flex">
+            {(["home", "business"] as const).map((item) => (
               <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`px-6 py-2 rounded-full text-sm sm:text-base font-semibold transition ${
-                  tab === t
-                    ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md"
-                    : "text-slate-700 hover:text-slate-900"
+                key={item}
+                onClick={() => setTab(item)}
+                className={`px-7 py-2 rounded-full font-semibold text-sm transition ${
+                  tab === item ? "bg-blue-600 text-white" : "text-slate-700 hover:text-blue-600"
                 }`}
               >
-                {t === "home" ? "Home" : "Business"}
+                {item === "home" ? "Home" : "Business"}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Cards */}
-        <div
-          className={`grid gap-6 ${
-            tab === "home"
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              : "grid-cols-1 sm:grid-cols-3 max-w-4xl mx-auto"
-          }`}
-        >
+        <div className={`grid gap-4 ${
+          tab === "home"
+            ? "grid-cols-2 md:grid-cols-3 xl:grid-cols-6"
+            : "grid-cols-1 sm:grid-cols-3 max-w-3xl mx-auto"
+        }`}>
           {packages.map((pkg) => (
             <div
-              key={pkg.speed}
-              className={`relative rounded-4xl border p-8 transition bg-white/5 backdrop-blur-sm border-white/10 shadow-lg hover:shadow-2xl transform will-change-transform ${
-                pkg.popular
-                  ? "scale-[1.02] ring-1 ring-blue-200"
-                  : "hover:-translate-y-1"
+              key={`${pkg.speed}-${pkg.price}`}
+              className={`relative rounded-2xl border bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 overflow-hidden flex flex-col ${
+                pkg.popular ? "border-blue-500 ring-2 ring-blue-500" : "border-slate-200"
               }`}
             >
+              {pkg.popular && (
+                <div className="absolute top-3 right-3 rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white leading-tight">
+                  Best Value
+                </div>
+              )}
 
-              {/* decorative accent */}
-              <div className="pointer-events-none absolute top-6 right-6 w-24 h-24 rounded-full bg-gradient-to-br from-blue-50/40 to-transparent blur-md opacity-60" />
+              <div className="p-4 flex flex-col flex-1">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 border border-blue-100">
+                  <Zap size={18} className="text-blue-600" />
+                </div>
 
-              <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-                {pkg.speed} Mbps
-              </h3>
+                <h3 className="text-lg font-bold text-slate-900 mb-1">{pkg.speed} Mbps</h3>
 
-              <p className="text-4xl sm:text-5xl font-extrabold text-blue-600 my-3 leading-tight">
-                KSH {pkg.price.toLocaleString()}
-                <span className="text-base text-slate-500 font-medium"> /month</span>
-              </p>
-              <p className="text-sm sm:text-base text-slate-700 mb-6 font-medium">
-                Plus free installation included.
-              </p>
+                <div className="mb-4">
+                  <span className="text-base font-extrabold text-blue-600">KES {pkg.price.toLocaleString()}</span>
+                  <span className="text-slate-400 text-xs ml-0.5">/month</span>
+                </div>
 
-              <ul className="space-y-3 text-base text-slate-700 mb-6">
-                <li className="flex gap-3 items-center">
-                  <Check size={16} className="text-blue-600" />
-                  <span className="font-medium">Unlimited Data</span>
-                </li>
-                <li className="flex gap-3 items-center">
-                  <Check size={16} className="text-emerald-500" />
-                  <span className="font-medium">Router Included</span>
-                </li>
-              </ul>
+                <ul className="space-y-1.5 mb-4 flex-1">
+                  {["Unlimited Internet", "Free Installation", "24/7 Technical Support", pkg.devices, pkg.extra].map((item) => (
+                    <li key={item} className="flex items-start gap-1.5 text-xs text-slate-700">
+                      <Check className="text-blue-600 shrink-0 mt-0.5" size={12} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
 
-              <a
-                href={`/contact?plan=${pkg.speed}`}
-                className={`inline-flex items-center justify-center gap-3 mx-auto px-6 py-3.5 rounded-full text-lg font-semibold transition-shadow ${
-                  pkg.popular
-                    ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg hover:shadow-xl"
-                    : "border border-white/10 text-slate-900 hover:bg-white/5"
-                }`}
-              >
-                Choose Plan
-              </a>
+                <Link
+                  href={`/contact?plan=${pkg.speed}`}
+                  className={`block rounded-lg py-2.5 text-center font-semibold text-xs transition mt-auto ${
+                    pkg.popular
+                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                  }`}
+                >
+                  Choose Plan
+                </Link>
+              </div>
             </div>
           ))}
         </div>
+
+        {tab === "business" && (
+          <div className="mt-6 flex items-center justify-center gap-2 text-blue-600 text-sm font-medium">
+            <Building2 size={16} className="shrink-0" />
+            Business plans include priority support, business-grade reliability and service level guarantees.
+          </div>
+        )}
       </div>
     </section>
   );
